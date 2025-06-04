@@ -1,0 +1,24 @@
+@use "./vars" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@;0,400;0,700;0,900;1,400&display=swap");
+
+html {
+  background-color: $secondary-color;
+}
+
+body {
+  width: 90vw;
+  height: 95vh;
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: $main-color;
+  border-radius: 16px;
+  font-family: "Lato", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+.link {
+  text-decoration: none;
+}

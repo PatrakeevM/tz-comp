@@ -1,0 +1,12 @@
+@use "../../vars" as *;
+
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  height: 260px;
+  border-radius: 12px;
+  background-color: $secondary-color;
+}

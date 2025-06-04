@@ -1,0 +1,30 @@
+@use "../../vars" as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: $secondary-color;
+  background-color: $header-color;
+  border-radius: 16px;
+  padding: 5px 15px;
+  margin-bottom: 25px;
+}
+
+.nav {
+  display: flex;
+  gap: 15px;
+  padding-right: 10px;
+  list-style-type: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: $main-color;
+    background-color: $secondary-color;
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+}
