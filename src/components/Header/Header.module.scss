@@ -26,5 +26,47 @@
     padding: 8px 12px;
     border-radius: 12px;
     cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.hasItems {
+      background-color: lighten($secondary-color, 5%);
+      border: 1px solid $main-color;
+    }
   }
+}
+
+.cartInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cartDetails {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.cartIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: $main-color;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
 }

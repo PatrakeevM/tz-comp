@@ -17,6 +17,14 @@ export default defineConfig({
       interval: 1000, // Интервал проверки (в миллисекундах)
     },
     allowedHosts: true,
+    proxy: {
+      '/api': {
+        target: 'http://o-complex.com:1337',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+      }
+    }
   },
   resolve: {
     alias: {
