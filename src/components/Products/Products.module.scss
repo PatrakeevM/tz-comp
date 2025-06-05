@@ -14,6 +14,16 @@
     display: flex;
   }
 
+  .endMessage,
+  .noProducts {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+  }
+
   @media (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -24,14 +34,12 @@
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    justify-items: center;
+    
+    & > div {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
   }
-}
-
-.endMessage, .noProducts {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 20px;
-  margin-top: 20px;
-  font-size: 18px;
-  color: #666;
 }

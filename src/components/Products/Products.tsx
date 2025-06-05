@@ -17,12 +17,10 @@ const Products: React.FC = () => {
   const loadProducts = async (pageNumber: number) => {
     try {
       setLoading(true);
-      console.log(`Запрос товаров: страница ${pageNumber}`);
       const response = await getProducts(pageNumber);
       
       if (response.items && response.items.length > 0) {
         console.log(`Получено ${response.items.length} товаров`);
-        console.log('Пример товара:', response.items[0]);
         
         if (pageNumber === 1) {
           setProducts(response.items);

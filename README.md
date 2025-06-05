@@ -1,54 +1,163 @@
-# React + TypeScript + Vite
+# Интернет-магазин на React с TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Тестовое задание - интернет-магазин, разработанный с использованием React, TypeScript, Vite и SCSS модулей.
 
-Currently, two official plugins are available:
+## Реализованные требования
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Основные функции
+- ✅ Загрузка и отображение товаров с API с использованием бесконечной прокрутки
+- ✅ Добавление товаров в корзину
+- ✅ Изменение количества товаров в корзине
+- ✅ Удаление товаров из корзины
+- ✅ Страница с отзывами, загружаемыми с API, с безопасным отображением HTML-контента
+- ✅ Форма для оформления заказа с валидацией телефона
+- ✅ Адаптивный дизайн для мобильных устройств
 
-## Expanding the ESLint configuration
+### Технические детали
+- ✅ Использование TypeScript для типизации данных
+- ✅ Модульный SCSS для стилизации компонентов
+- ✅ Работа с REST API через fetch
+- ✅ Контекст для управления состоянием корзины
+- ✅ Корректная обработка ошибок API и отображение загрузки
+- ✅ Корректная настройка CORS через прокси-сервер в Vite
+- ✅ Адаптивный дизайн с оптимизацией для мобильных устройств
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Дополнительные улучшения
+- ✅ Анимации для улучшения UX
+- ✅ Бесконечная прокрутка товаров с оптимизацией загрузки
+- ✅ Сохранение корзины между сессиями (localStorage)
+- ✅ Безопасное отображение HTML-контента в отзывах (DOMPurify)
+- ✅ Улучшенная валидация телефона с форматированием
+- ✅ Оптимизация для мобильных устройств с иконками вместо текста
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Как запустить проект
+
+### Требования
+- Node.js 18.0 или выше
+- npm или yarn
+
+### Шаги для запуска
+
+1. Клонировать репозиторий:
+```bash
+git clone <url-репозитория>
+cd tz-complex
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Установить зависимости:
+```bash
+npm install
+# или
+yarn install
+```
+
+3. Запустить проект в режиме разработки:
+```bash
+npm run dev
+# или
+yarn dev
+```
+
+4. Открыть проект в браузере:
+```
+http://localhost:5173
+```
+
+### Сборка для продакшн
+```bash
+npm run build
+# или
+yarn build
+```
+
+### Конфигурация проекта
+
+В проекте настроен прокси для решения проблем с CORS. Конфигурация находится в файле `vite.config.ts`:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+proxy: {
+  '/api': {
+    target: 'http://o-complex.com:1337',
+    changeOrigin: true,
+    rewrite: (path) => path.replace(/^\/api/, ''),
+    secure: false,
+  }
+}
 ```
+
+## API и структура данных
+
+Проект взаимодействует с внешним API через настроенный прокси:
+
+### Товары
+- `GET /api/products?page={number}` - получение списка товаров с пагинацией
+  - Ответ: `{ items: IProduct[], total: number }`
+
+### Отзывы
+- `GET /api/reviews` - получение списка отзывов
+  - Ответ: `IReview[]`
+
+### Типы данных
+```typescript
+// Товар
+interface IProduct {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  image_url: string;
+}
+
+// Отзыв
+interface IReview {
+  id: number;
+  text: string; // содержит HTML
+}
+
+// Элемент корзины
+interface ICartItem {
+  id: number;
+  quantity: number;
+}
+```
+
+## Структура проекта
+
+```
+src/
+├── assets/          # Статические ресурсы (изображения, SVG)
+├── components/      # React компоненты
+│   ├── Cart/        # Компоненты корзины
+│   ├── Header/      # Компонент шапки
+│   ├── Product/     # Компонент товара
+│   ├── ProductList/ # Компонент списка товаров
+│   └── Review/      # Компонент отзывов
+├── context/         # React контексты
+├── hooks/           # Пользовательские хуки
+├── pages/           # Страницы приложения
+├── services/        # Сервисы для работы с API
+├── types/           # TypeScript типы
+├── utils/           # Утилиты и вспомогательные функции
+├── App.tsx          # Главный компонент приложения
+├── main.tsx         # Точка входа в приложение
+└── vars.scss        # Глобальные SCSS переменные
+```
+
+## Основные особенности реализации
+
+- **Бесконечная прокрутка**: реализована с использованием Intersection Observer API для эффективной загрузки товаров
+- **Корзина**: использует React Context для глобального доступа и localStorage для сохранения между сессиями
+- **Валидация телефона**: форматирование ввода в стиле +7 (XXX) XXX-XX-XX с проверкой полноты номера
+- **Адаптивность**: специальная версия для мобильных устройств с оптимизированными элементами интерфейса
+- **Отображение HTML**: безопасное отображение HTML-контента из API с очисткой через DOMPurify
+
+## Используемые технологии
+
+- React 19
+- TypeScript 5.8
+- Vite 6.3
+- SCSS (Sass)
+- React Router 7.6
+- DOMPurify для безопасной обработки HTML
+- SVGR для работы с SVG как React компонентами
+- Node polyfills для совместимости

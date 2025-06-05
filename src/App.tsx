@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import "./App.scss";
 import CartPage from "./pages/CartPage";
 import Products from "./components/Products";
+import ReviewsPage from "./pages/ReviewsPage";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Products />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/reviews" element={<ReviewsPage />} />
           </Routes>
         </div>
       </div>

@@ -11,14 +11,18 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <h1>Тестовое задание</h1>
+      <Link to="/" className={styles.logo}>
+        <h1>Тестовое задание</h1>
+      </Link>
       <nav className={styles.nav}>
-        <li>
-          <span>Отзывы</span>
-          <ReviewsIcon width={22} height={20} />
-        </li>
-        <Link className="link" to={"/cart"}>
-          <li className={totalItems > 0 ? styles.hasItems : ""}>
+        <Link className="link" to="/reviews">
+          <li className={styles.reviewsButton}>
+            <span>Отзывы</span>
+            <ReviewsIcon width={26} height={24} className={styles.icon} />
+          </li>
+        </Link>
+        <Link className="link" to="/cart">
+          <li className={`${styles.cartButton} ${totalItems > 0 ? styles.hasItems : ""}`}>
             <div className={styles.cartInfo}>
               <span>Корзина</span>
               {totalItems > 0 && (
@@ -29,7 +33,7 @@ const Header: React.FC = () => {
               )}
             </div>
             <div className={styles.cartIconWrapper}>
-              <CartIcon width={22} />
+              <CartIcon width={26} className={styles.icon} />
               {totalItems > 0 && (
                 <span className={styles.cartBadge}>{totalItems}</span>
               )}

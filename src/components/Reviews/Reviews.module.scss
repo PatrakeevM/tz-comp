@@ -1,0 +1,65 @@
+@use "../../vars" as *;
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 10px 50px;
+  background-color: $secondary-color;
+  border-radius: 16px;
+  min-height: 300px;
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: $main-color;
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.error {
+  text-align: center;
+  padding: 30px;
+  color: #f44336;
+  font-size: 18px;
+}
+
+.noReviews {
+  text-align: center;
+  padding: 30px;
+  color: $main-color;
+  font-size: 18px;
+}
+
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Стили для мобильных устройств
+@media (max-width: 600px) {
+  .reviews {
+    margin: 10px 20px;
+    padding: 15px;
+    
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .reviewsList {
+    gap: 15px;
+  }
+} 

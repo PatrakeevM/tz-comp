@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import type { ChangeEvent } from "react";
+import { useState, useRef, useEffect } from "react";
+import type { ChangeEvent, FocusEvent } from "react";
 import { Link } from "react-router-dom";
 import BackIcon from "../../assets/svg/back-icon.svg?react";
 import styles from "./Cart.module.scss";
@@ -10,7 +10,20 @@ const Cart: React.FC = () => {
   const [phone, setPhone] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
   const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Определяем, является ли устройство мобильным
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -39,6 +52,8 @@ const Cart: React.FC = () => {
       }
 
       setPhone(formattedValue);
+      // Сбросить сообщение об ошибке при редактировании
+      setIsValid(true);
     }
   };
 
@@ -60,6 +75,30 @@ const Cart: React.FC = () => {
           }, 0);
         }
       }
+    }
+  };
+
+  const handleInputFocus = (e: FocusEvent<HTMLInputElement>) => {
+    // На мобильных устройствах показываем числовую клавиатуру
+    if (isMobile && inputRef.current) {
+      // Для Android и iOS сделаем числовую клавиатуру по умолчанию
+      e.currentTarget.inputMode = 'tel';
+      
+      if (!phone) {
+        setPhone("+7 (");
+        setTimeout(() => {
+          inputRef.current?.setSelectionRange(4, 4);
+        }, 50);
+      }
+    }
+  };
+
+  const handleInputBlur = () => {
+    // Проверяем формат при потере фокуса
+    if (phone && phone.length < 15) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
     }
   };
 
@@ -217,12 +256,16 @@ const Cart: React.FC = () => {
           <div className={styles.phoneInputWrapper}>
             <input
               ref={inputRef}
-              type="text"
+              type="tel"
               value={phone}
               onChange={handlePhoneChange}
               onClick={handleInputClick}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               placeholder="+7 (___) ___-__-__"
               className={`${styles.phoneInput} ${!isValid ? styles.invalid : ""}`}
+              autoComplete="tel"
+              inputMode="tel"
             />
             {!isValid && <div className={styles.errorMessage}>Введите корректный номер телефона</div>}
           </div>
